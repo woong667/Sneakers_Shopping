@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
+app.post('/api/product',require('./routes/product')); //post 리퀘스트로 보냈기때문에 app.post로 받고 api/product로 보낸건 여기서 routes/product로 가라는 뜻
 
 
 //use this to show the image you have in node js server to client (react js)
