@@ -35,7 +35,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
         }, [])
 
         return (
-            <SpecificComponent {...props} user={user} />
+            <SpecificComponent {...props} user={user} />       //여기 props이 모든 애들 부모component
         )
     }
     return AuthenticationCheck
