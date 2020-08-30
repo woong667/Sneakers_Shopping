@@ -37,6 +37,20 @@ router.post("/image", (req, res) => {   //axios.post로 보냈기때문에 post�
     })     
 });
 
+router.post('/products',(req,res)=>{                   //잘 기억해놔야함 몽고DB에 저장하는 기본적 틀..
+    
+
+  let limit=req.body.limit? parseInt(req.body.limit):100;
+  let skip=req.body.skip;
+  //비디오를 db에서 가져와서 client에 보낸다.
+  Product.find()
+  .populate('writer')         //populate를 해줘야지만 모든 데이터를 가져올 수 있다.
+  .exec((err,productInfo)=>{
+      if(err) return res.status(400).send(err);
+      res.status(200).json({success: true,productInfo})
+  })
+})
+
 router.post("/", (req, res) => {   //axios.post로 보냈기때문에 post로 받는다.
 
 
