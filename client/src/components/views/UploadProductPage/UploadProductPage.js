@@ -98,7 +98,7 @@ function UploadProductPage(props) {
              <label>신발 브랜드 </label>
              <select onChange={brandChangeHandler} value={Brand}>
                  {brand.map(item=>(
-                          <option key={item.key} value={item.value}>{item.value}</option>
+                          <option key={item.key} value={item.key}>{item.value}</option>
                  ))}
              </select>
              <br />

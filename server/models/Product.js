@@ -32,7 +32,8 @@ const ProductSchema = mongoose.Schema({
        default:0
     },
     brand:{
-        type:String,
+        type:Number,
+        default:1
     }
 
 },{timestamps:true}) //timestamp를 true로 놓으면 등록시간과 같은 것들이 자동으로 mongodb에 저장이된다.
