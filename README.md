@@ -1,1 +1,13 @@
-새 신발말고 중고신발만을 팔 수 있는 곳없어??????????????
+# Used Limited Edition Sneakers for sale WebSite by React(feat: Kream)
+
+*Function*
+----------------------
++ Sign up,Sign in
++ Upload product
++ soon
++ soon
++ replies
+
+*DataBase*
+---------------------
+MongoDB
