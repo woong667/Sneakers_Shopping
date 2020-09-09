@@ -5,7 +5,8 @@ import {Icon,Col,Card,Row,Carousel} from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import ImageSlider from '../../utils/ImageSlider.js'
 import CheckBox from './Section/CheckBox.js';
-import {brand} from './Section/datas.js'
+import {brand,price} from './Section/datas.js';
+import RadioBox from './Section/RadioBox.js'
 
 function LandingPage() {
 
@@ -91,8 +92,16 @@ function LandingPage() {
             <div style={{textAlign:'center'}}>
               <h2>한정판 중고 신발들이 한눈에! <Icon type='like'/></h2>
             </div>
+            <Row gutter={16,16}>
+                <Col lg={12} xs={24}>
+                < CheckBox lists={brand} handleFilters={filters=>handleFilters(filters,"brand")}/> {/*filters에는 CheckBox에서 props로 보낸 newChecked있음 */}
+                </Col>
+                <Col lg={12} xs={24}>
+                <RadioBox lists={price} handleFilters={filters=>handleFilters(filters,"price")}/>
+                </Col>
+           </Row>
         
-        < CheckBox lists={brand} handleFilters={filters=>handleFilters(filters,"brand")}/> {/*filters에는 CheckBox에서 props로 보낸 newChecked있음 */}
+
         <Row gutter={16,16}>
           {renderCards}
         </Row>
