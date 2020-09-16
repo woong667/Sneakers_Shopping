@@ -8,7 +8,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize:'1rem'
         }}>
-           <p> Happy Coding  <Icon type="smile" /></p>
+           <p> 오늘의 나와 다음달의 나와 그 다음달의 내가 만나면....  <Icon type="smile" /></p>
         </div>
     )
 }

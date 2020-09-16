@@ -7,10 +7,12 @@ import ImageSlider from '../../utils/ImageSlider.js'
 import CheckBox from './Section/CheckBox.js';
 import {brand,price} from './Section/datas.js';
 import RadioBox from './Section/RadioBox.js'
+import SearchFeatures from './Section/SearchFeatures.js'
+import Background from '../../../background/main2.jpg';
 
 function LandingPage() {
 
-
+    const [SearchTerm, setSearchTerm] = useState("")
     const [products, setproducts] = useState([])
     const [Skip, setSkip] = useState(0) 
     const [Limit, setLimit] = useState(8)     //한 페이지 몇개의 db를 가져오느냐 결정할때 사용할수 있음
@@ -20,7 +22,7 @@ function LandingPage() {
         price:[]
     })
 
-    useEffect(() => {        //이 페이지가 실행되면 수행해야하는 효과.
+    useEffect(() => {        //이 페이지가 실행되면 수행해야하는 효과.   그니까 처음 뜨면 뜨는 화면
        
         let body={
             skip:Skip,
@@ -53,7 +55,7 @@ function LandingPage() {
             cover={<ImageSlider images={product.images}/>}>
                 <Meta   
                 title={product.title}
-                description={`$${product.price}`}/>
+                description={`￦${product.price}`}/>
                 </Card>
                 </Col>
     })
@@ -81,15 +83,51 @@ function LandingPage() {
         setSkip(0)
     }
 
+    const handlePrice=(value)=>{
+        const data=price;
+        let array=[];
+        for(let key in data){
+            if(data[key]._id===parseInt(value,10))
+            {
+                array=data[key].array;
+            }
+        }
+        return array;
+    }
+
     const handleFilters=(filters,category)=>{   //check박스에서 가져온것들을 landing페이지의 state에 넣어야하기에...
            const Newfilters={...Filters}
            Newfilters[category]=filters
+           
+
+           if(category==='price')
+           {
+               let priceValues=handlePrice(filters);
+               Newfilters[category]=priceValues;
+           }
            showFilteredResults(Newfilters);
+           setFilters(Newfilters);
     }
 
+    const updateSearchTerm=(newSearchTerm)=>{       //search기능을 통해서 searchFeatures.js에서 받아온 값을 여기서 set
+     
+
+        let body={
+            skip:0,
+            limit:Limit,
+            filters:Filters,
+            searchTerm:newSearchTerm
+        }
+        setSkip(0);
+        setSearchTerm(newSearchTerm);
+        getproduct(body);
+    
+        }
+
     return (
+    
         <div style={{width:'75%' ,margin:'3rem auto'}}>
-            <div style={{textAlign:'center'}}>
+            <div style={{textAlign:'center',margin:'2rem'}}>
               <h2>한정판 중고 신발들이 한눈에! <Icon type='like'/></h2>
             </div>
             <Row gutter={16,16}>
@@ -100,6 +138,11 @@ function LandingPage() {
                 <RadioBox lists={price} handleFilters={filters=>handleFilters(filters,"price")}/>
                 </Col>
            </Row>
+
+           <div style={{display:'flex', justifyContent:'flex-end', margin:'1rem'}}>
+           <SearchFeatures 
+           refreshFunction={updateSearchTerm}/>
+           </div>
         
 
         <Row gutter={16,16}>
@@ -111,6 +154,7 @@ function LandingPage() {
                 <button onClick={loadMoreHandler}>더보기</button>
             </div>}
         </div>
+        
     )
 }
 

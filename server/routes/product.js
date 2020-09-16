@@ -42,27 +42,54 @@ router.post('/products',(req,res)=>{                   //잘 기억해놔야함 
 
   let limit=req.body.limit? parseInt(req.body.limit):100;  //가져온 limit이 있으면 이걸 숫자로 바꿔서 limit으로 대입 없으면 걍 100넣고
   let skip=req.body.skip?parseInt(req.body.skip):0;       //가져온 skip이 있으면 이걸 숫자로 바꿔서 skip으로 대입 없으면 0을 대입
+  let term=req.body.searchTerm;
 
   let findArgs={};
   for(let key in req.body.filters){
     if(req.body.filters[key].length>0)    //category별로 하나 이상씩 눌린게 있으면
     {
-          findArgs[key]=req.body.filters[key]
-    }
-    else{
 
+          if(key==='price') 
+          {
+            findArgs[key]=
+            {
+              $gte:req.body.filters[key][0],     //greater than equal 
+              $lte:req.body.filters[key][1]      //less than equal      둘다 몽고DB에서 사용하는 쿼리이다.ㅎ
+            }
+          }
+          else{
+            findArgs[key]=req.body.filters[key]
+          }
+    
     }
+  }
+  
+  console.log(term)
+  if(term)    //검색기능에서 보낸 정보가 있으면
+  {
+    Product.find(findArgs)
+    .find({ $text:{ $search: term } })         //여기서는 mongodb에서 제공해주는 text로 찾는 기능을 가져와야한다.
+    .populate('writer')         //populate를 해줘야지만 모든 데이터를 가져올 수 있다.
+    .skip(skip)
+    .limit(limit)               //오호 이런식으로 넣어주는군.
+    .exec((err,productInfo)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).json({success: true,productInfo,postSize:productInfo.length})
+    })
+  }
+  else{     //없으면
+    Product.find(findArgs)
+    .populate('writer')         //populate를 해줘야지만 모든 데이터를 가져올 수 있다.
+    .skip(skip)
+    .limit(limit)               //오호 이런식으로 넣어주는군.
+    .exec((err,productInfo)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).json({success: true,productInfo,postSize:productInfo.length})
+    })
   }
   console.log(findArgs)
   //비디오를 db에서 가져와서 client에 보낸다.
-  Product.find(findArgs)
-  .populate('writer')         //populate를 해줘야지만 모든 데이터를 가져올 수 있다.
-  .skip(skip)
-  .limit(limit)               //오호 이런식으로 넣어주는군.
-  .exec((err,productInfo)=>{
-      if(err) return res.status(400).send(err);
-      res.status(200).json({success: true,productInfo,postSize:productInfo.length})
-  })
+ 
 })
 
 router.post("/", (req, res) => {   //axios.post로 보냈기때문에 post로 받는다.

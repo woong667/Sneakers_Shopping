@@ -1,5 +1,8 @@
 import React from 'react';
 import { Menu } from 'antd';
+import MenuContext from 'antd/lib/menu/MenuContext';
+import MenuItem from 'antd/lib/menu/MenuItem';
+import logo from '../../../../background/logo.png'
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -19,6 +22,7 @@ function LeftMenu(props) {
         <Menu.Item key="setting:4">Option 4</Menu.Item>
       </MenuItemGroup>
     </SubMenu>
+ 
   </Menu>
   )
 }

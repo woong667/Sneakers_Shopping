@@ -38,6 +38,15 @@ const ProductSchema = mongoose.Schema({
 
 },{timestamps:true}) //timestamp를 true로 놓으면 등록시간과 같은 것들이 자동으로 mongodb에 저장이된다.
 
+ProductSchema.index({
+    title:'text',
+    description:'text'       //찾을때 제목과 설명에 찾는게 포함되어있는지 확인한다.
+},{
+    weights:{            //이건 중요도를 주는 거 높을수록 중요하게 친다.
+        title:5,
+        description:1
+    }
+})
 
 const Product = mongoose.model('Product', ProductSchema);
 module.exports = {Product}
