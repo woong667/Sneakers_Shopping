@@ -4,7 +4,7 @@
 ----------------------
 + Sign up,Sign in
 + Upload product
-+ soon
++ Product Detail
 + soon
 + replies
 
