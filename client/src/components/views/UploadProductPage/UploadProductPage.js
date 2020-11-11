@@ -88,7 +88,9 @@ function UploadProductPage(props) {
              <br />
              <br /> 
              <label>설명</label>
-             <TextArea onChange={detailChangeHandler} value={Detail}/>
+             <TextArea onChange={detailChangeHandler} value={Detail} placeholder='연락처,거래방법,구매날짜,착용횟수는 필수로 작성해주세요
+             
+             . 제품의 상태를 꼼꼼히 작성해주셔야 추후에 분쟁이 없습니다.'/>
              <br />
              <br />
              <label>가격(WON) </label>

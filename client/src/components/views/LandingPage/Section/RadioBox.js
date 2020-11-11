@@ -24,7 +24,7 @@ function RadioBox(props) {
 
     return (
         <div>
-             <Collapse defaultActiveKey={['1']} >
+             <Collapse defaultActiveKey={['0']} >
          <Panel header="가격범위설정" key="1">
             <Radio.Group onChange={handleChange} value={value}>
              {rendorRadioBox()}

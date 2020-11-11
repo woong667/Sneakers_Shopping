@@ -98,11 +98,29 @@ router.post("/", (req, res) => {   //axios.post로 보냈기때문에 post로 �
     //받아온 정보들을 DB에 넣어준다.
     const product=new Product(req.body)
     console.log(product);
-    product.save((err)=>{       //몽고db로 저장한다.
+    Product.save((err)=>{       //몽고db로 저장한다.
         if(err) return res.status(400).json({success:false,err})  //실패시
 
         return res.status(200).json({success:true});
     })
+
+});
+
+
+
+router.get("/product_by_id", (req, res) => {   //axios.post로 보냈기때문에 post로 받는다.
+
+
+       let type=req.query.type;
+       let productId=req.query.id;
+
+       Product.find({_id:productId})
+       .populate('writer')
+       .exec((err,product)=>{
+         if(err)
+         return res.status(400).send(err);
+          return res.status(200).send({ success:true,product});
+       })
 
 });
 
